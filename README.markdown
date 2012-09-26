@@ -22,3 +22,14 @@ Like any Deferrable eventmachine-based protocol implementation, using EM-Couchba
         end
       end
     end
+
+## SUPPORT
+
+If you found an issue, please file it in our [JIRA][1]. Also you are
+always welcome on `#libcouchbase` channel at [freenode.net IRC servers][2].
+
+Documentation: [http://rdoc.info/gems/couchbase-em][3]
+
+[1]: http://couchbase.com/issues/browse/RCBCEM
+[2]: http://freenode.net/irc_servers.shtml
+[3]: http://rdoc.info/gems/couchbase-em
