@@ -61,8 +61,9 @@ module EventMachine
           end
         end
 
-        def set(opaque, vbucket, key, value, options = {})
-          packet = Packet.build(opaque, vbucket, :set,
+        def mutate(operation, opaque, vbucket, key, value, options = {})
+          packet = Packet.build(opaque, vbucket,
+                                operation,
                                 key, value,
                                 options[:flags],
                                 options[:expiration],

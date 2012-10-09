@@ -132,15 +132,35 @@ module EventMachine
           [vbucket, @nodes[@config.vbucket_map[vbucket][0]]]
         end
 
-        def set(key, val, options = {}, &block)
+        def mutate(operation, key, val, options = {}, &block)
           callback do
             opaque = opaque_inc
             register_handler(opaque, key, block)
             vbucket, node = locate(key)
             node.callback do
-              node.set(opaque, vbucket, key, val, options)
+              node.mutate(operation, opaque, vbucket, key, val, options)
             end
           end
+        end
+
+        def set(key, val, options = {}, &block)
+          mutate(:set, key, val, options = {}, &block)
+        end
+
+        def add(key, val, options = {}, &block)
+          mutate(:add, key, val, options = {}, &block)
+        end
+
+        def replace(key, val, options = {}, &block)
+          mutate(:replace, key, val, options = {}, &block)
+        end
+
+        def prepend(key, val, options = {}, &block)
+          mutate(:prepend, key, val, options = {}, &block)
+        end
+
+        def append(key, val, options = {}, &block)
+          mutate(:append, key, val, options = {}, &block)
         end
 
         def get(*keys, &block)

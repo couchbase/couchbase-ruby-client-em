@@ -84,12 +84,24 @@ module EventMachine
 
         def self.build(opaque, vbucket, opcode, *args)
           case opcode
-          when :set
+          when :set, :add, :replace, :append, :prepend
             key, value, flags, expiration, cas = args.shift(5)
+            operation = case opcode
+                        when :set
+                          CMD_SET
+                        when :add
+                          CMD_ADD
+                        when :replace
+                          CMD_REPLACE
+                        when :append
+                          CMD_APPEND
+                        when :prepend
+                          CMD_PREPEND
+                        end
             bodylen = key.size + value.size + 8
             [
               0x80,             # uint8_t   magic
-              CMD_SET,          # uint8_t   opcode
+              operation,        # uint8_t   opcode
               key.size,         # uint16_t  keylen
               8,                # uint8_t   extlen (flags + expiration)
               0,                # uint8_t   datatype
@@ -203,6 +215,14 @@ module EventMachine
             case opcode
             when CMD_SET
               result.operation = :set
+            when CMD_ADD
+              result.operation = :add
+            when CMD_REPLACE
+              result.operation = :replace
+            when CMD_APPEND
+              result.operation = :append
+            when CMD_PREPEND
+              result.operation = :prepend
             when CMD_SASL_AUTH
               result.operation = :sasl_auth
             when CMD_GET
