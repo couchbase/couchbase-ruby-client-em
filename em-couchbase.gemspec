@@ -35,10 +35,9 @@ Gem::Specification.new do |s|
   s.extensions    = `git ls-files -- ext/**/extconf.rb`.split("\n")
   s.require_paths = ['lib']
 
-  s.add_runtime_dependency 'yajl-ruby', '~> 1.1.0'
-  # to use fixes from eventmachine master branch
-  s.add_runtime_dependency 'eventmachine-le', '~> 1.1.0'
-  s.add_runtime_dependency 'em-http-request', '~> 1.0.1'
+  s.add_runtime_dependency 'yajl-ruby', '~> 1.1'
+  s.add_runtime_dependency 'eventmachine', '~> 1.0'
+  s.add_runtime_dependency 'em-http-request', '~> 1.0'
 
   s.add_development_dependency 'rake', '~> 0.8.7'
   s.add_development_dependency 'minitest'
